@@ -25,14 +25,17 @@ pacman::p_load(foreign, data.table, ggplot2,
                here, shiny, shinydashboard)
 
 options(encoding = "utf-8")
+
 options(scipen=999)
 
 #___________________________________________________________________________________________________ 
 
 # Material ----
 data <- read.csv("tablex_full_country_results.csv")
+
 paises <- unique(data$country)
 cohorte <- unique(data$cohort)
+
 tema <- theme_minimal() +
   theme(axis.text = element_text(size = 11, colour = "gray40"),
         axis.title = element_text(size = 13, colour = "gray40"), 
@@ -48,8 +51,7 @@ lateral <- dashboardSidebar(
   sidebarMenu(
     menuItem("Generación Sandwich",tabName="sandwich",icon=icon("person")),
     menuItem("Generación Gransandwich",tabName="gransandwich",icon=icon("people-group")),
-    width = 300, collapsed = T)
-)
+    width = 300, collapsed = T))
 
 
 # Contenido ----
@@ -139,8 +141,22 @@ cuerpo <-  dashboardBody(
       ))),
   tabItems(
     tabItem(tabName = "sandwich", f1, f2, f3), 
-    tabItem(tabName = "gransandwich", f4, f5, f6)
-  ))
+    tabItem(tabName = "gransandwich", f4, f5, f6)),
+    tags$footer(
+      HTML("Fuente de la información utilizada en este tablero: Alburez-Gutierrez, D., Mason, C., and Zagheni, E. (2021). The 'Sandwich Generation' Revisited: Global Demographic Drivers of Care Time Demands. <br>
+      Population and Development Review. https://doi.org/10.1111/padr.12436.Datos disponibles en: https://github.com/alburezg/sandwich_clean"),
+      align = "left",
+      style = "
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #ECF0F5;
+        padding: 10px;
+        color: #545454;
+        font-size: 12.5px;"
+    )
+  )
 
 
 # Servidor -----
